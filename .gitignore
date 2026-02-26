@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# 가상환경
+venv/
+.venv/
+env/
+
+# Claude Code 로컬 설정
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
