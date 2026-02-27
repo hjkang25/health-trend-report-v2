@@ -1,14 +1,14 @@
 # =============================================================
 # .github/workflows/daily_health_news.yml
 # 매일 오전 9시 (KST) 자동 실행 – 헬스 트렌드 수집 시스템 v2
-# KST 09:00 = UTC 00:00
+# KST 09:05 = UTC 00:05
 # =============================================================
 
 name: Daily Health News Collector
 
 on:
   schedule:
-    - cron: "0 0 * * *"      # 매일 UTC 00:00 = KST 09:00
+    - cron: "5 0 * * *"      # 매일 UTC 00:05 = KST 09:05
 
   workflow_dispatch:          # 수동 실행 허용 (GitHub UI에서 테스트 가능)
 
