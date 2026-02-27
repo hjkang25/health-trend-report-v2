@@ -99,7 +99,7 @@ def append_trend(
     )
 
     if trend_path.exists():
-        existing = pd.read_csv(trend_path, encoding="utf-8-sig")
+        existing = pd.read_csv(trend_path, encoding="utf-8-sig", dtype={"date": str})
         # 같은 날짜가 이미 있으면 덮어쓰기 (재실행 방지)
         existing = existing[existing["date"] != date_str]
         combined = pd.concat([existing, new_rows], ignore_index=True)

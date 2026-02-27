@@ -29,8 +29,8 @@ DATA_DIR = Path(__file__).parent / "data"
 # ─────────────────────────────────────────────────────────────
 
 @st.cache_data
-def load_trend() -> pd.DataFrame:
-    """keyword_trend.csv 전체 로드."""
+def load_trend(mtime: float = 0.0) -> pd.DataFrame:
+    """keyword_trend.csv 전체 로드. mtime이 바뀌면 캐시 자동 무효화."""
     path = DATA_DIR / "keyword_trend.csv"
     if not path.exists():
         return pd.DataFrame(columns=["date", "rank", "keyword", "frequency"])
@@ -91,12 +91,17 @@ with st.sidebar:
 # ─────────────────────────────────────────────────────────────
 # 데이터 로드
 # ─────────────────────────────────────────────────────────────
-trend_df = load_trend()
+_trend_path = DATA_DIR / "keyword_trend.csv"
+_trend_mtime = _trend_path.stat().st_mtime if _trend_path.exists() else 0.0
+
+trend_df = load_trend(_trend_mtime)
 news_df  = load_news(selected_date)
 
 today_kw = (
     trend_df[trend_df["date"] == selected_date]
-    .sort_values("rank")
+    .sort_values(["rank", "frequency"], ascending=[True, False])
+    .drop_duplicates(subset="rank", keep="first")
+    .head(10)
     .reset_index(drop=True)
 )
 
